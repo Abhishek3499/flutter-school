@@ -35,6 +35,20 @@ class LoginController extends ChangeNotifier {
     // Optionally: do something with a LoginData instance (logging, navigation)
   }
 
+  /// Demo social sign-in handler. Replace with real OAuth flow when available.
+  void signInWithGoogle(BuildContext context) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Google sign-in (demo)')));
+  }
+
+  /// Demo Gmail sign-in handler (UI-only stub). Replace with a real flow.
+  void signInWithGmail(BuildContext context) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Gmail sign-in (demo)')));
+  }
+
   @override
   void dispose() {
     phoneController.dispose();
