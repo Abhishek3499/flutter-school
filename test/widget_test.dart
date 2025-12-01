@@ -11,20 +11,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:login_page/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Login page renders, shows tagline and Gmail social button', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Wait for animations to settle
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Main login action should be present
+    expect(find.widgetWithText(ElevatedButton, 'Login'), findsOneWidget);
+
+    // Tagline should be visible
+    expect(find.text('Start Your Coding Journey Today'), findsOneWidget);
+
+    // Gmail social button should be present
+    expect(find.text('Login with Gmail'), findsOneWidget);
+
+    // Tap Gmail button and verify SnackBar appears
+    await tester.tap(find.text('Login with Gmail'));
     await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Gmail sign-in (demo)'), findsOneWidget);
   });
 }

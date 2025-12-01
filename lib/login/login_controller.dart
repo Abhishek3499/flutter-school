@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 /// This class mirrors the previous inline state from `_LoginPageState` and
 /// exposes methods for validation, toggling password visibility, and submit.
 class LoginController extends ChangeNotifier {
+  final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final passController = TextEditingController();
 
@@ -20,8 +21,13 @@ class LoginController extends ChangeNotifier {
 
   bool validate() => formKey.currentState?.validate() ?? false;
 
-  void submit(BuildContext context) {
-    if (!validate()) return;
+  /// Submits the form and returns true when submission is successful.
+  ///
+  /// This method still only runs demo behaviour (SnackBar) — replace with
+  /// real authentication calls for production. Returning a boolean allows
+  /// the UI layer to navigate after a successful login.
+  bool submit(BuildContext context) {
+    if (!validate()) return false;
 
     // Build a value object for potential future use (auth, navigation, logging)
     // final data = LoginData(phone: phoneController.text, password: passController.text);
@@ -33,26 +39,27 @@ class LoginController extends ChangeNotifier {
     ).showSnackBar(const SnackBar(content: Text('Login Successful (Demo)')));
 
     // Optionally: do something with a LoginData instance (logging, navigation)
+    return true;
   }
 
-  /// Demo social sign-in handler. Replace with real OAuth flow when available.
-  void signInWithGoogle(BuildContext context) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Google sign-in (demo)')));
-  }
+  // (Google sign-in removed)
 
-  /// Demo Gmail sign-in handler (UI-only stub). Replace with a real flow.
-  void signInWithGmail(BuildContext context) {
+  /// Demo Gmail sign-in handler (UI-only stub). Sets a demo name and returns
+  /// true so the UI can navigate to the Home screen. Replace with a real
+  /// Google Sign-In flow when integrating authentication.
+  bool signInWithGmail(BuildContext context) {
+    // Demo behaviour: populate name and show a SnackBar
+    nameController.text = 'Google User';
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(const SnackBar(content: Text('Gmail sign-in (demo)')));
+    return true;
   }
 
   @override
   void dispose() {
+    nameController.dispose();
     phoneController.dispose();
-    // emailController removed (no longer used in UI)
     passController.dispose();
     super.dispose();
   }

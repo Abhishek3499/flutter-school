@@ -1,3 +1,13 @@
+String? nameValidator(String? v) {
+  if (v == null || v.trim().isEmpty) {
+    return 'Name is required';
+  }
+  if (v.trim().length < 2) {
+    return 'Name must be at least 2 characters';
+  }
+  return null;
+}
+
 bool isValidEmail(String value) {
   // Very small, permissive check used in the original UI
   return value.contains('@');
